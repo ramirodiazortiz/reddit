@@ -18,6 +18,10 @@
 		8BE7965724FDDFDD00A1F61A /* ApiCallError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7964E24FDDFDD00A1F61A /* ApiCallError.swift */; };
 		8BE7965824FDDFDD00A1F61A /* ResponseParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7965024FDDFDD00A1F61A /* ResponseParseable.swift */; };
 		8BE7965924FDDFDD00A1F61A /* RequestExecutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7965124FDDFDD00A1F61A /* RequestExecutable.swift */; };
+		8BE7966724FE011100A1F61A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE7966524FE011000A1F61A /* Main.storyboard */; };
+		8BE7966B24FE01D800A1F61A /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7966924FE01D800A1F61A /* PostDetailViewController.swift */; };
+		8BE7966C24FE01D800A1F61A /* TopPostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7966A24FE01D800A1F61A /* TopPostsListViewController.swift */; };
+		8BE7966E24FE01E100A1F61A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7966D24FE01E000A1F61A /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,10 @@
 		8BE7965024FDDFDD00A1F61A /* ResponseParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParseable.swift; sourceTree = "<group>"; };
 		8BE7965124FDDFDD00A1F61A /* RequestExecutable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestExecutable.swift; sourceTree = "<group>"; };
 		8BE7965B24FDE0C700A1F61A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localization.strings; sourceTree = "<group>"; };
+		8BE7966624FE011000A1F61A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8BE7966924FE01D800A1F61A /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		8BE7966A24FE01D800A1F61A /* TopPostsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopPostsListViewController.swift; sourceTree = "<group>"; };
+		8BE7966D24FE01E000A1F61A /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +110,11 @@
 		8BE795DC24FD71DC00A1F61A /* Reddit Viewer */ = {
 			isa = PBXGroup;
 			children = (
+				8BE7966824FE017D00A1F61A /* ViewController */,
 				8BE7964624FDDFDD00A1F61A /* Network */,
 				8BE795DD24FD71DC00A1F61A /* AppDelegate.swift */,
+				8BE7966D24FE01E000A1F61A /* SceneDelegate.swift */,
+				8BE7966524FE011000A1F61A /* Main.storyboard */,
 				8BE795EA24FD71DF00A1F61A /* LaunchScreen.storyboard */,
 				8BE795ED24FD71DF00A1F61A /* Info.plist */,
 				8BE7965A24FDE0C700A1F61A /* Localization.strings */,
@@ -149,6 +160,15 @@
 				8BE7965124FDDFDD00A1F61A /* RequestExecutable.swift */,
 			);
 			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		8BE7966824FE017D00A1F61A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8BE7966A24FE01D800A1F61A /* TopPostsListViewController.swift */,
+				8BE7966924FE01D800A1F61A /* PostDetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE7966724FE011100A1F61A /* Main.storyboard in Resources */,
 				8BE795EC24FD71DF00A1F61A /* LaunchScreen.storyboard in Resources */,
 				8BE795E924FD71DF00A1F61A /* Assets.xcassets in Resources */,
 			);
@@ -280,14 +301,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE7966B24FE01D800A1F61A /* PostDetailViewController.swift in Sources */,
 				8BE7965824FDDFDD00A1F61A /* ResponseParseable.swift in Sources */,
 				8BE7965524FDDFDD00A1F61A /* ResponseParser.swift in Sources */,
+				8BE7966E24FE01E100A1F61A /* SceneDelegate.swift in Sources */,
 				8BE7965424FDDFDD00A1F61A /* RequestExecutor.swift in Sources */,
 				8BE7965324FDDFDD00A1F61A /* ApiCallResult.swift in Sources */,
 				8BE7965224FDDFDD00A1F61A /* NetworkEnvironment.swift in Sources */,
 				8BE7965724FDDFDD00A1F61A /* ApiCallError.swift in Sources */,
 				8BE7965624FDDFDD00A1F61A /* Endpoint.swift in Sources */,
 				8BE795DE24FD71DC00A1F61A /* AppDelegate.swift in Sources */,
+				8BE7966C24FE01D800A1F61A /* TopPostsListViewController.swift in Sources */,
 				8BE7965924FDDFDD00A1F61A /* RequestExecutable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +360,14 @@
 				8BE7965B24FDE0C700A1F61A /* en */,
 			);
 			name = Localization.strings;
+			sourceTree = "<group>";
+		};
+		8BE7966524FE011000A1F61A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8BE7966624FE011000A1F61A /* en */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
