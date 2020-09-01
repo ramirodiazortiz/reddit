@@ -16,7 +16,6 @@ class Post: NSObject, Decodable {
 	let numberOfComments: Int
 	let thumbnailUrl: String?
 	let title: String
-	let wasRead: Bool
 
 	enum CodingKeys: String, CodingKey {
 		case author
@@ -28,7 +27,6 @@ class Post: NSObject, Decodable {
 		case title
 	}
 	
-	//TODO: Use local storage to check if the news was read or not
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 			.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
@@ -38,7 +36,6 @@ class Post: NSObject, Decodable {
 		numberOfComments = try container.decode(Int.self, forKey: .numberOfComments)
 		thumbnailUrl = try container.decodeIfPresent(String.self, forKey: .thumbnailUrl)
 		title = try container.decode(String.self, forKey: .title)
-		wasRead = false
 	}
 
 }
