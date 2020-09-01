@@ -24,17 +24,27 @@ extension Endpoint {
 
 	///Returns a url using .serverUrl defined in the main bundle info.plist file.
     var baseUrl: String {
-		return "https://www.reddit.com/"
+		return "www.reddit.com"
     }
 
-	///Returns a url string by concatenating baseUrl + path  properties.
-    func buildURL() -> String {
-        return "\(baseUrl)\(path)"
+	///Returns a url by concatenating baseUrl + path +  params properties.
+    func buildURL() -> URL? {
+		var components = URLComponents()
+		components.scheme = scheme
+		components.host = baseUrl
+		components.path = path
+		components.queryItems = params.toQueryItems
+		return components.url
     }
 
 	///Returns "convertFromSnakeCase" as default keyDecodingStrategy.
 	var keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy {
-		return .convertFromSnakeCase
+		return .useDefaultKeys
+	}
+	
+	///Scheme used in the url request
+	var scheme: String {
+		return "https"
 	}
 
 }

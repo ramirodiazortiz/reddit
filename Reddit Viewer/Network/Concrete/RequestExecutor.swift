@@ -34,9 +34,8 @@ class RequestExecutor: RequestExecutable {
 	- parameter expectedType: type of an object implementing **Decodable** protocol.
 	*/
 	func execute<T>(endpoint: Endpoint, with expectedType: T.Type, completionHandler: CompletionBlock<T>?) where T : Decodable {
-		let stringUrl = endpoint.buildURL()
-		guard let url = URL(string: stringUrl) else {
-			completionHandler?(ApiCallResult.failure(.invalidUrl(stringUrl)))
+		guard let url = endpoint.buildURL() else {
+			completionHandler?(ApiCallResult.failure(.invalidUrl("\(endpoint.baseUrl) \(endpoint.path) \(endpoint.params.description)")))
 			return
 		}
 		self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)

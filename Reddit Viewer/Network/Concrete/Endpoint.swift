@@ -17,7 +17,9 @@ protocol Endpoint {
 	///Parameters of an specific endpoint.
 	var params: [String: Any] { get }
 	///Returns  a full url, joining all the relevant parts
-    func buildURL() -> String
+    func buildURL() -> URL?
 	///Decoding strategy used for the specific endpoint.
 	var keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy { get }
+	///Scheme used in the url
+	var scheme: String { get }
 }
