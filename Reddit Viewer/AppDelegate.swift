@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Reddit Viewer
+//  reddit
 //
 //  Created by Ramiro Diaz on 31/08/2020.
 //  Copyright © 2020 Ramiro Diaz. All rights reserved.
