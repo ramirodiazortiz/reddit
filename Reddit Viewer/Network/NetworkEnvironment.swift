@@ -33,7 +33,7 @@ extension Endpoint {
 		components.scheme = scheme
 		components.host = baseUrl
 		components.path = path
-		components.queryItems = params.toQueryItems
+		components.queryItems = params?.toQueryItems
 		return components.url
     }
 
@@ -45,6 +45,10 @@ extension Endpoint {
 	///Scheme used in the url request
 	var scheme: String {
 		return "https"
+	}
+	
+	var params: [String : Any]? {
+		return nil
 	}
 
 }

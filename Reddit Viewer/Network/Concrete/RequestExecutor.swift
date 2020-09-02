@@ -30,23 +30,25 @@ class RequestExecutor: RequestExecutable {
 
 	/**
 	Executes a request, parsing the received data using the response handler.
-	- parameter endpoint: endpoint conforming **Endpointable** protocol.
+	- parameter url: url to request
 	- parameter expectedType: type of an object implementing **Decodable** protocol.
+	- parameter decodingStrategy: strategy of type **JSONDecoder.KeyDecodingStrategy**
+	used to decode the model. Default is **.useDefaultKeys**
+	- parameter completionHandler: the completion handler dispatched when the request finishes.
+	 This handler includes an api result object, that can either be .success (including the parsed object) or failure (including ApiCallError data)
 	*/
-	func execute<T>(endpoint: Endpoint, with expectedType: T.Type, completionHandler: CompletionBlock<T>?) where T : Decodable {
-		guard let url = endpoint.buildURL() else {
-			completionHandler?(ApiCallResult.failure(.invalidUrl("\(endpoint.baseUrl) \(endpoint.path) \(endpoint.params.description)")))
-			return
-		}
+
+	func execute<T>(url: URL, decodingStrategy: JSONDecoder.KeyDecodingStrategy?, with expectedType: T.Type, completionHandler: CompletionBlock<T>?) where T : Decodable {
 		self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
-		self.task = self.session?.dataTask(with: url) { data, response, error in
+		self.task = self.session?.dataTask(with: url) { [weak self] data, response, error in
 			do {
+				guard let s = self else { return }
 				let parsedResponse =
-					try self.responseHandler.handleResponse(
+					try s.responseHandler.handleResponse(
 						data: data,
 						response: response,
 						expectedType: T.self,
-						decodingStrategy: endpoint.keyDecodingStrategy
+						decodingStrategy: decodingStrategy ?? .useDefaultKeys
 				)
 				let result = ApiCallResult<T, ApiCallError>.success(parsedResponse)
 				completionHandler?(result)

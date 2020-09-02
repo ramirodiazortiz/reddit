@@ -15,11 +15,12 @@ protocol Endpoint {
 	///path of an specific endpoint.
 	var path: String { get }
 	///Parameters of an specific endpoint.
-	var params: [String: Any] { get }
+	var params: [String: Any]? { get }
 	///Returns  a full url, joining all the relevant parts
     func buildURL() -> URL?
 	///Decoding strategy used for the specific endpoint.
 	var keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy { get }
 	///Scheme used in the url
 	var scheme: String { get }
+	
 }

@@ -12,12 +12,14 @@ import UIKit
 protocol RequestExecutable {
 	/**
 	Method to start running a request  based on a url
-	- parameter endpoint: endpoint associated to the request (implementing endpoint interface)
-	- parameter expectedType: expected type of the object after parsing the data
+	- parameter url: url to request
+	- parameter expectedType: type of an object implementing **Decodable** protocol.
+	- parameter decodingStrategy: strategy of type **JSONDecoder.KeyDecodingStrategy**
+	used to decode the model. Default is **.useDefaultKeys**
 	- parameter completionHandler: the completion handler dispatched when the request finishes.
 	This handler includes an api result object, that can either be .success (including the parsed object) or failure (including ApiCallError data)
    */
-	func execute<T: Decodable>(endpoint: Endpoint, with expectedType: T.Type, completionHandler: ((ApiCallResult<T, ApiCallError>) -> Void)?) -> Void
+	func execute<T: Decodable>(url: URL, decodingStrategy: JSONDecoder.KeyDecodingStrategy?, with expectedType: T.Type, completionHandler: ((ApiCallResult<T, ApiCallError>) -> Void)?) -> Void
 
 	///Method to cancel current request
     func cancel()

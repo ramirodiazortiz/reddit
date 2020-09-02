@@ -28,17 +28,18 @@ class PostListManager: NSObject {
 	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block
 	- parameter pageSize: desired ammount of posts
 	- parameter afterId: id of a post. When passed this parameter, we will only find elements after this one
-	- parameter completion:callback when the task is done
+	- parameter completion:callback when the task is done.
 	*/
 	func getPosts(pageSize: Int, afterId: String? = nil, completion: @escaping CompletionBlock) {
-		executor.execute(endpoint: CollectionEndpoints.topPosts(limit: pageSize, after: afterId), with: PostList.self) { [weak self] (result) in
+		let endpoint = CollectionEndpoints.topPosts(limit: pageSize, after: afterId)
+		executor.execute(url: endpoint.buildURL()!, decodingStrategy: endpoint.keyDecodingStrategy, with: PostList.self) { [weak self] (result) in
 			switch result {
 				case .success(let list):
 					self?.checkLimit(list.data, limit: pageSize, completion: completion)
 				case .failure(let error):
 					completion(error)
-				}
 			}
+		}
 	}
 	
 	
