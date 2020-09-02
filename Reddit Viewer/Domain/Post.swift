@@ -11,7 +11,7 @@ import UIKit
 class Post: NSObject, Decodable {
 
 	let author: String
-	let entryDateTimestamp: Int
+	let entryDate: Date
 	let id: String
 	let numberOfComments: Int
 	let thumbnailUrl: String?
@@ -20,6 +20,7 @@ class Post: NSObject, Decodable {
 	enum CodingKeys: String, CodingKey {
 		case author
 		case data
+		case kind
 		case entryDateTimestamp = "created_utc"
 		case id
 		case numberOfComments = "num_comments"
@@ -28,11 +29,14 @@ class Post: NSObject, Decodable {
 	}
 	
 	required init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: CodingKeys.self)
-			.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
+		var container = try decoder.container(keyedBy: CodingKeys.self)
+		let kind = try container.decode(String.self, forKey: .kind)
+		container = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
 		author = try container.decode(String.self, forKey: .author)
-		entryDateTimestamp = try container.decode(Int.self, forKey: .entryDateTimestamp)
-		id = try container.decode(String.self, forKey: .id)
+		let entryDateTimestamp = try container.decode(TimeInterval.self, forKey: .entryDateTimestamp)
+		entryDate = Date(timeIntervalSince1970: entryDateTimestamp)
+		let id = try container.decode(String.self, forKey: .id)
+		self.id = "\(kind)_\(id)"
 		numberOfComments = try container.decode(Int.self, forKey: .numberOfComments)
 		thumbnailUrl = try container.decodeIfPresent(String.self, forKey: .thumbnailUrl)
 		title = try container.decode(String.self, forKey: .title)

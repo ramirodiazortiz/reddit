@@ -28,6 +28,7 @@
 		8BE7967924FE17B100A1F61A /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967824FE17B100A1F61A /* Dictionary+Extension.swift */; };
 		8BE7967E24FEAC5000A1F61A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967D24FEAC5000A1F61A /* LocalStorage.swift */; };
 		8BE7968024FEAEF500A1F61A /* PostStatusStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967F24FEAEF500A1F61A /* PostStatusStorage.swift */; };
+		8BE7968824FF05D000A1F61A /* PostListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7968724FF05D000A1F61A /* PostListManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		8BE7967824FE17B100A1F61A /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		8BE7967D24FEAC5000A1F61A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		8BE7967F24FEAEF500A1F61A /* PostStatusStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatusStorage.swift; sourceTree = "<group>"; };
+		8BE7968724FF05D000A1F61A /* PostListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 			children = (
 				8BE7968624FF057200A1F61A /* Storage */,
 				8BE7967024FE0FCD00A1F61A /* PostList.swift */,
+				8BE7968724FF05D000A1F61A /* PostListManager.swift */,
 				8BE7967124FE0FCD00A1F61A /* Post.swift */,
 			);
 			path = Domain;
@@ -366,6 +369,7 @@
 				8BE7965724FDDFDD00A1F61A /* ApiCallError.swift in Sources */,
 				8BE7965624FDDFDD00A1F61A /* Endpoint.swift in Sources */,
 				8BE795DE24FD71DC00A1F61A /* AppDelegate.swift in Sources */,
+				8BE7968824FF05D000A1F61A /* PostListManager.swift in Sources */,
 				8BE7966C24FE01D800A1F61A /* TopPostsListViewController.swift in Sources */,
 				8BE7967424FE0FCE00A1F61A /* PostList.swift in Sources */,
 				8BE7965924FDDFDD00A1F61A /* RequestExecutable.swift in Sources */,

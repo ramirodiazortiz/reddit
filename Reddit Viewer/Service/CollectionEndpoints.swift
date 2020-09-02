@@ -11,21 +11,25 @@ import UIKit
 enum CollectionEndpoints: Endpoint {
 
 	//limit: maximum number of posts per call
-	case topPosts(limit: Int)
+	case topPosts(limit: Int, after: String?)
 
 	//path for each Collection service.
 	var path: String {
 		switch self {
 		case .topPosts:
-			return "/r/subreddit/top.json"
+			return "/top.json"
 		}
 	}
 
 	//params for each type of post.
 	var params: [String: Any] {
 		switch self {
-		case .topPosts(let limit):
-			return ["limit": limit, "t": "all"]
+		case .topPosts(let limit, let after):
+			if after == nil {
+				return ["limit": limit]
+			} else {
+				return ["limit": limit, "after": after!]
+			}
 		}
 	}
 
