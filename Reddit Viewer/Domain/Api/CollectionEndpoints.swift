@@ -22,7 +22,7 @@ enum CollectionEndpoints: Endpoint {
 	}
 
 	//params for each type of post.
-	var params: [String: Any] {
+	var params: [String: Any]? {
 		switch self {
 		case .topPosts(let limit, let after):
 			if after == nil {

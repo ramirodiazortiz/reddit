@@ -104,6 +104,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8BCCC5CC25003158001B9847 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				8BE7967324FE0FCE00A1F61A /* CollectionEndpoints.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		8BCCC5CD2500316B001B9847 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8BE7967124FE0FCD00A1F61A /* Post.swift */,
+				8BE7967024FE0FCD00A1F61A /* PostList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8BCCC5CE250031B5001B9847 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				8BCCC5CF250031C9001B9847 /* ImageManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		8BE795D124FD71DC00A1F61A = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +152,6 @@
 			children = (
 				8BE7967724FE179A00A1F61A /* Extension */,
 				8BE7966F24FE0FCD00A1F61A /* Domain */,
-				8BE7967224FE0FCE00A1F61A /* Service */,
 				8BE7966824FE017D00A1F61A /* ViewController */,
 				8BE7964624FDDFDD00A1F61A /* Network */,
 				8BE795DD24FD71DC00A1F61A /* AppDelegate.swift */,
@@ -192,28 +216,30 @@
 		8BE7966F24FE0FCD00A1F61A /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				8BE7968624FF057200A1F61A /* Storage */,
-				8BE7967024FE0FCD00A1F61A /* PostList.swift */,
 				8BE7968724FF05D000A1F61A /* PostListManager.swift */,
-				8BE7967124FE0FCD00A1F61A /* Post.swift */,
+				8BCCC5CE250031B5001B9847 /* Service */,
+				8BCCC5CD2500316B001B9847 /* Model */,
+				8BCCC5CC25003158001B9847 /* Api */,
+				8BE7968624FF057200A1F61A /* Storage */,
 			);
 			path = Domain;
-			sourceTree = "<group>";
-		};
-		8BE7967224FE0FCE00A1F61A /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				8BE7967324FE0FCE00A1F61A /* CollectionEndpoints.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		8BE7967724FE179A00A1F61A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				8BE7967824FE17B100A1F61A /* Dictionary+Extension.swift */,
+				8BE7968124FEFBCD00A1F61A /* Date+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		8BE7967A24FE8E0800A1F61A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8BE7967B24FE8E1800A1F61A /* TopPostCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		8BE7968624FF057200A1F61A /* Storage */ = {

@@ -16,7 +16,7 @@ class PostListManager: NSObject {
 	private(set) var topPosts = [Post]()
 	private let statusStorage = PostStatusStorage()
 	private let executor: RequestExecutable
-	
+
 	/**
 	Initialize the manager.
 	- parameter requestExecutor: concrete object implementing RequestExecutable interface
