@@ -1,0 +1,33 @@
+/* Networking Error: url invalid  */
+"InvalidUrlError" = "Invalid url";
+/* Networking Error: unknown error */
+"UnknownError" = "Unknown error";
+/* Networking Error: no data */
+"NoDataError" = "Can't found Data object in the response";
+/* Networking Error: no http response */
+"NoResponseError" = "Can't found a HTTPURLResponse object in the respose";
+/* Networking Error: invalid json */
+"InvalidJSONParsing" = "Invalid JSON Parsing";
+/* Networking Error: status code */
+"StatusCode"="Status code";
+/* Networking Error: error description */
+"ErrorDescription" = "Error description";
+
+/* Posts list: dismiss all */
+"DismissAll" = "Dismiss All";
+
+/* Posts cell: comment */
+"Comment" = "Comment";
+/* Posts cell: comments */
+"Comments" = "Comments";
+
+/* Posts cell, time: days */
+"DaysAgo" = "Days(s) ago";
+/* Posts cell, time: hours */
+"HoursAgo" = "Hour(s) ago";
+/* Posts cell, time: minutes */
+"MinutesAgo" = "Minutes(s) ago";
+/* Posts cell, time: seconds */
+"SecondsAgo" = "Secods(s) ago";
+
+

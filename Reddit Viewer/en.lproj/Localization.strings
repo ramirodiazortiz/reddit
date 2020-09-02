@@ -1,8 +1,0 @@
-//Networking
-"InvalidUrlError" = "Invalid url"
-"UnknownError" = "Unknown error"
-"NoDataError" = "Can't found Data object in the response"
-"NoResponseError" = "Can't found a HTTPURLResponse object in the respose"
-"InvalidJSONParsing" = "Invalid JSON Parsing"
-"StatusCode" = "Status code"
-"ErrorDescription" = "Error description"
