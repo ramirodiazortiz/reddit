@@ -12,11 +12,12 @@ import UIKit
 class PostListManager: NSObject {
 
 	typealias CompletionBlock = (ApiCallError?) -> Void
+	typealias NewPageCompletionBlock = ([String], ApiCallError?) -> Void
 	
 	private(set) var topPosts = [Post]()
 	private let statusStorage = PostStatusStorage()
 	private let executor: RequestExecutable
-
+	var isRefreshing = false
 	/**
 	Initialize the manager.
 	- parameter requestExecutor: concrete object implementing RequestExecutable interface
@@ -31,6 +32,7 @@ class PostListManager: NSObject {
 	- parameter completion:callback when the task is done.
 	*/
 	func getPosts(pageSize: Int, afterId: String? = nil, completion: @escaping CompletionBlock) {
+		isRefreshing = true
 		let endpoint = CollectionEndpoints.topPosts(limit: pageSize, after: afterId)
 		executor.execute(url: endpoint.buildURL()!, decodingStrategy: endpoint.keyDecodingStrategy, with: PostList.self) { [weak self] (result) in
 			switch result {
@@ -42,6 +44,21 @@ class PostListManager: NSObject {
 		}
 	}
 	
+	/**
+	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block. It uses last post id as 
+	- parameter pageSize: desired ammount of posts
+	- parameter completion:callback when the task is done. Returns both the new posts ids and the error, if any
+	*/
+	func getNextPage(pageSize: Int, completion: @escaping NewPageCompletionBlock) {
+		let oldPostIds = self.postsIds
+		getPosts(pageSize: pageSize, afterId: topPosts.last?.id) { [weak self] (error) in
+			guard let s = self else {
+				completion([], error)
+				return
+			}
+			completion(Array(s.postsIds.subtracting(oldPostIds)), error)
+		}
+	}
 	
 	/**
 	Updates the topPosts list by removing the post., Also marks the post as dismissed in the cache.
@@ -92,13 +109,17 @@ class PostListManager: NSObject {
 		return topPosts.count
 	}
 
+	///Returs a set containing the id off all the posts
+	private var postsIds: Set<String> {
+		return Set(topPosts.compactMap { $0.id })
+	}
 	/**
 	Given a page of posts, it removes the elements that were already dismissed.
 	- parameter page list of elements retrieved by the server
 	- returns:the list of posts, excluding those elements already dismissed
 	*/
 	private func filterNotDismissedPosts(_ page: [Post]) -> [Post] {
-		return page.filter { !statusStorage.getPostDismissedStatus(postId: $0.id) }
+		return page.filter { !statusStorage.getPostDismissedStatus(postId: $0.id) && !topPosts.contains($0) }
 	}
 	
 	/**
@@ -110,24 +131,33 @@ class PostListManager: NSObject {
 	private func checkLimit(_ page: [Post], limit: Int, completion: @escaping CompletionBlock) {
 		if page.isEmpty {
 			completion(nil)
-			return
+			isRefreshing = false
 		}
 		let filteredPage = filterNotDismissedPosts(page)
 		topPosts.append(contentsOf: filteredPage)
 		if filteredPage.count >= limit {
 			completion(nil)
+			isRefreshing = false
 		} else {
 			let newLimit = limit - filteredPage.count
 			if let lastId = page.last?.id {
 				getPosts(pageSize: newLimit, afterId: lastId,  completion: completion)
 			} else {
 				completion(nil)
+				isRefreshing = false
 			}
 		}
 	}
-	
+
 	subscript(index: Int) -> Post? {
         return topPosts[index]
     }
-	
+
+	///Returns the index list of the posts in topPosts array (sorted ASC)
+	func indexFor(postIds: [String]) -> [Int] {
+		return postIds.compactMap { postId in
+			topPosts.firstIndex { postId == $0.id }
+		}.sorted()
+	}
+
 }

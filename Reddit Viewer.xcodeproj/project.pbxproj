@@ -124,6 +124,7 @@
 		8BCCC5CE250031B5001B9847 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				8BE7968724FF05D000A1F61A /* PostListManager.swift */,
 				8BCCC5CF250031C9001B9847 /* ImageManager.swift */,
 			);
 			path = Service;
@@ -216,7 +217,6 @@
 		8BE7966F24FE0FCD00A1F61A /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				8BE7968724FF05D000A1F61A /* PostListManager.swift */,
 				8BCCC5CE250031B5001B9847 /* Service */,
 				8BCCC5CD2500316B001B9847 /* Model */,
 				8BCCC5CC25003158001B9847 /* Api */,
