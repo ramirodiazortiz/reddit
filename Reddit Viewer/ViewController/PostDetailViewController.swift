@@ -14,25 +14,28 @@ class PostDetailViewController: UIViewController {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var authorLabel: UILabel!
 	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var tapImageLabel: UILabel!
+	@IBOutlet weak var longPressImageLabel: UILabel!
 	
-	weak var imageManger: ImageManager?
+	var imageManger: ImageManager?
 	
-	var post: Post? {
-		didSet {
-		    setupView()
-		}
-	}
+	var post: Post?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
-		addLongPressGesture()
+	}
+	
+	@objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
+		if sender.state == .ended, let urlString = post?.picture, let url = URL(string: urlString)  {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
 	}
 
-	@objc func handleGesture(_ sender: UILongPressGestureRecognizer) {
-		if let image = imageView?.image, sender.state == .began {
-			AlertHelper.showAlert(title: "Photo", message: "PhotoAsking", okText: "Ok", cancelText: "Cancel", okHandler: { [weak self] in
-				self?.handleStatus(image: image, authorizationStatus: PHPhotoLibrary.authorizationStatus())
+	@objc func handleLongPressGesture(_ sender: UILongPressGestureRecognizer) {
+		if sender.state == .began {
+			AlertHelper.showAlert(title: "Photo", message: "PhotoAsking", okText: "Ok", cancelText: "Cancel", okHandler: { [unowned self] in
+				self.handleStatus(image: self.imageView.image!, authorizationStatus: PHPhotoLibrary.authorizationStatus())
 			}, presenter: self)
         }
 	}
@@ -56,11 +59,16 @@ class PostDetailViewController: UIViewController {
 	}
 	
 	private func addLongPressGesture() {
-		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
 		longPressGesture.numberOfTapsRequired = 0
 		longPressGesture.minimumPressDuration = 1.0
-		imageView.isUserInteractionEnabled = true
 		imageView?.addGestureRecognizer(longPressGesture)
+	}
+	
+	private func addTapGesture() {
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+		tapGesture.numberOfTapsRequired = 2
+		imageView?.addGestureRecognizer(tapGesture)
 	}
 	
 	private func setupView() {
@@ -68,12 +76,23 @@ class PostDetailViewController: UIViewController {
 			titleLabel?.text = nil
 			authorLabel?.text = nil
 			imageView?.image = nil
+			longPressImageLabel?.isHidden = true
+			tapImageLabel?.isHidden = true
 			return
 		}
 		titleLabel?.text = post.title
 		authorLabel?.text = post.author
-		if let image = imageManger?.getImageFromLocalCache(post.id) {
-			self.imageView?.image = image
+		if let image = imageManger?.getLocalImage(id: post.id) {
+			imageView?.image = image
+			imageView.isUserInteractionEnabled = true
+			if imageView.image != nil {
+				longPressImageLabel.isHidden = false
+				addLongPressGesture()
+				if post.picture != nil {
+					tapImageLabel.isHidden = false
+					addTapGesture()
+				}
+			}
 		} else {
 			self.imageView?.image = UIImage(systemName: "arrow.clockwise.icloud")
 		}
@@ -102,5 +121,6 @@ class PostDetailViewController: UIViewController {
 		})
 		self.present(alert, animated: true, completion: nil)
 	}
+	
 }
 

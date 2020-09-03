@@ -52,15 +52,35 @@
                                 <rect key="frame" x="143" y="173" width="128" height="88"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long press on the image to save it in the gallery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EHX-F0-bYW">
+                                <rect key="frame" x="25" y="821" width="364" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double tap on the image to open the full version externally" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="F05-yp-WeT">
+                                <rect key="frame" x="51.5" y="759" width="311" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="EHX-F0-bYW" firstAttribute="top" secondItem="F05-yp-WeT" secondAttribute="bottom" constant="21" id="6UC-UJ-0tG"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EHX-F0-bYW" secondAttribute="trailing" constant="8" id="8g1-xp-QA3"/>
+                            <constraint firstItem="EHX-F0-bYW" firstAttribute="centerX" secondItem="VUw-jc-0yf" secondAttribute="centerX" id="C8g-8K-G8R"/>
                             <constraint firstItem="uIE-rB-hrA" firstAttribute="top" secondItem="ywr-vQ-nhi" secondAttribute="bottom" constant="8" id="HQw-Np-i1V"/>
+                            <constraint firstItem="F05-yp-WeT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="16" id="IJW-se-HtC"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F05-yp-WeT" secondAttribute="trailing" constant="16" id="OCK-JE-UJH"/>
+                            <constraint firstItem="F05-yp-WeT" firstAttribute="centerX" secondItem="VUw-jc-0yf" secondAttribute="centerX" id="SHZ-rm-PJF"/>
                             <constraint firstItem="uIE-rB-hrA" firstAttribute="leading" secondItem="ywr-vQ-nhi" secondAttribute="leading" id="Vea-qs-olT"/>
                             <constraint firstItem="y5F-Ky-eFn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="8" id="WJn-Gu-Knu"/>
                             <constraint firstItem="VUw-jc-0yf" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ywr-vQ-nhi" secondAttribute="trailing" constant="8" id="Zjb-rB-Sbg"/>
                             <constraint firstItem="y5F-Ky-eFn" firstAttribute="top" secondItem="uIE-rB-hrA" secondAttribute="bottom" constant="8" id="bxi-t6-RB6"/>
-                            <constraint firstItem="VUw-jc-0yf" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="y5F-Ky-eFn" secondAttribute="bottom" priority="750" constant="8" id="fQ6-Gd-R0f"/>
+                            <constraint firstItem="F05-yp-WeT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y5F-Ky-eFn" secondAttribute="bottom" priority="750" constant="8" id="fQ6-Gd-R0f"/>
+                            <constraint firstItem="EHX-F0-bYW" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="25" id="gnZ-f4-19v"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="bottom" secondItem="EHX-F0-bYW" secondAttribute="bottom" constant="20" id="kLb-ae-hXn"/>
                             <constraint firstItem="ywr-vQ-nhi" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" constant="16" id="kaH-MT-kBy"/>
                             <constraint firstItem="ywr-vQ-nhi" firstAttribute="leading" secondItem="VUw-jc-0yf" secondAttribute="leading" constant="8" id="lBV-NG-fJJ"/>
                             <constraint firstItem="y5F-Ky-eFn" firstAttribute="centerX" secondItem="VUw-jc-0yf" secondAttribute="centerX" id="qXk-8q-1Gl"/>
@@ -74,12 +94,14 @@
                     <connections>
                         <outlet property="authorLabel" destination="uIE-rB-hrA" id="HEX-ea-Fik"/>
                         <outlet property="imageView" destination="y5F-Ky-eFn" id="CeK-kU-3dp"/>
+                        <outlet property="longPressImageLabel" destination="EHX-F0-bYW" id="bQ5-XU-knS"/>
+                        <outlet property="tapImageLabel" destination="F05-yp-WeT" id="Vc9-1T-MJn"/>
                         <outlet property="titleLabel" destination="ywr-vQ-nhi" id="ev6-R0-ATE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="708.69565217391312" y="128.57142857142856"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">

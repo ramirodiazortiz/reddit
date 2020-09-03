@@ -16,30 +16,36 @@ struct Post: Decodable {
 	let numberOfComments: Int
 	let thumbnailUrl: String?
 	let title: String
+	let picture: String?
 
 	enum CodingKeys: String, CodingKey {
 		case author
 		case data
 		case kind
 		case entryDateTimestamp = "created_utc"
-		case id
+		case name
 		case numberOfComments = "num_comments"
 		case thumbnailUrl = "thumbnail"
 		case title
+		case url
 	}
 	
 	init(from decoder: Decoder) throws {
-		var container = try decoder.container(keyedBy: CodingKeys.self)
-		let kind = try container.decode(String.self, forKey: .kind)
-		container = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+			.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
 		author = try container.decode(String.self, forKey: .author)
 		let entryDateTimestamp = try container.decode(TimeInterval.self, forKey: .entryDateTimestamp)
 		entryDate = Date(timeIntervalSince1970: entryDateTimestamp)
-		let id = try container.decode(String.self, forKey: .id)
-		self.id = "\(kind)_\(id)"
+		self.id = try container.decode(String.self, forKey: .name)
 		numberOfComments = try container.decode(Int.self, forKey: .numberOfComments)
 		thumbnailUrl = try container.decodeIfPresent(String.self, forKey: .thumbnailUrl)
 		title = try container.decode(String.self, forKey: .title)
+		let url = try container.decodeIfPresent(String.self, forKey: .url)
+		if let url = url, (url.hasSuffix(".png") || url.hasSuffix(".jpg")) {
+			picture = url
+		} else {
+			picture = nil
+		}
 	}
 
 }
