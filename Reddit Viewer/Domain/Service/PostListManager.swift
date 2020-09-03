@@ -12,32 +12,40 @@ import UIKit
 class PostListManager: NSObject {
 
 	typealias CompletionBlock = (ApiCallError?) -> Void
-	typealias NewPageCompletionBlock = ([String], ApiCallError?) -> Void
+	typealias NewPageCompletionBlock = ([String], ApiCallError?, Bool) -> Void
 	
 	private(set) var topPosts = [Post]()
 	private let statusStorage = PostStatusStorage()
 	private let executor: RequestExecutable
+	private let maxPosts: Int
+	
 	var isRefreshing = false
 	/**
 	Initialize the manager.
 	- parameter requestExecutor: concrete object implementing RequestExecutable interface
+	- parameter maxItems: maximum number of posts
 	*/
-	init(requestExecutor: RequestExecutable) {
+	init(requestExecutor: RequestExecutable, maxPosts: Int) {
 		self.executor = requestExecutor
+		self.maxPosts = maxPosts
 	}
 	/**
-	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block
+	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block. We don't look fetch new posts if maxPosts was reached
 	- parameter pageSize: desired ammount of posts
 	- parameter afterId: id of a post. When passed this parameter, we will only find elements after this one
 	- parameter completion:callback when the task is done.
 	*/
 	func getPosts(pageSize: Int, afterId: String? = nil, completion: @escaping CompletionBlock) {
+		let realPageSize = min(pageSize, maxPosts - topPosts.count)
+		if realPageSize == 0 {
+			return
+		}
 		isRefreshing = true
-		let endpoint = CollectionEndpoints.topPosts(limit: pageSize, after: afterId)
+		let endpoint = CollectionEndpoints.topPosts(limit: realPageSize, after: afterId)
 		executor.execute(url: endpoint.buildURL()!, decodingStrategy: endpoint.keyDecodingStrategy, with: PostList.self) { [weak self] (result) in
 			switch result {
 				case .success(let list):
-					self?.checkLimit(list.data, limit: pageSize, completion: completion)
+					self?.checkLimit(list.data, limit: realPageSize, completion: completion)
 				case .failure(let error):
 					completion(error)
 			}
@@ -47,16 +55,21 @@ class PostListManager: NSObject {
 	/**
 	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block. It uses last post id as 
 	- parameter pageSize: desired ammount of posts
-	- parameter completion:callback when the task is done. Returns both the new posts ids and the error, if any
+	- parameter completion:callback when the task is done. Returns, the new posts ids, the error, if any and a boolean indicating whether maxPosts was reached
 	*/
 	func getNextPage(pageSize: Int, completion: @escaping NewPageCompletionBlock) {
+		let realPageSize = min(pageSize, maxPosts - topPosts.count)
+		if realPageSize == 0 {
+			completion([], nil, true)
+			return
+		}
 		let oldPostIds = self.postsIds
-		getPosts(pageSize: pageSize, afterId: topPosts.last?.id) { [weak self] (error) in
+		getPosts(pageSize: realPageSize, afterId: topPosts.last?.id) { [weak self] (error) in
 			guard let s = self else {
-				completion([], error)
+				completion([], error, false)
 				return
 			}
-			completion(Array(s.postsIds.subtracting(oldPostIds)), error)
+			completion(Array(s.postsIds.subtracting(oldPostIds)), error, false)
 		}
 	}
 	

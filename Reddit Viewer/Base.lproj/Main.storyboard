@@ -53,7 +53,7 @@
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="uIE-rB-hrA" firstAttribute="top" secondItem="ywr-vQ-nhi" secondAttribute="bottom" constant="8" id="HQw-Np-i1V"/>
                             <constraint firstItem="uIE-rB-hrA" firstAttribute="leading" secondItem="ywr-vQ-nhi" secondAttribute="leading" id="Vea-qs-olT"/>

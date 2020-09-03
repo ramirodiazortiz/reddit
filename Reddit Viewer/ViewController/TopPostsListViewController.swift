@@ -15,10 +15,14 @@ class TopPostsListViewController: UIViewController {
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet var topPostListFooter: TopPostListFooter!
 	
-	private let postListManager = PostListManager(requestExecutor: NetworkEnvironment.getExecutor)
+	private let postListManager = PostListManager(
+		requestExecutor: NetworkEnvironment.getExecutor,
+		maxPosts: TopPostsListViewController.maxPosts
+	)
 	private let imageManager = ImageManager(requestExecutor: NetworkEnvironment.getImageExecutor)
 	
-	private let pageSize = 10
+	private static let pageSize = 10
+	private static let maxPosts = 50
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -51,7 +55,7 @@ class TopPostsListViewController: UIViewController {
 		let current = postListManager.indexFor(postIds: currentPostsIds).compactMap { IndexPath(row: $0, section: 0) }
 		postListManager.clearRepository()
 		tableView.deleteRows(at: current, with: .right)
-		postListManager.getPosts(pageSize: pageSize) { [weak self] (error)  in
+		postListManager.getPosts(pageSize: TopPostsListViewController.pageSize) { [weak self] (error)  in
 			DispatchQueue.main.async {
 				if error != nil {
 					self?.showAlert(message: error?.errorDescription)
@@ -67,7 +71,7 @@ class TopPostsListViewController: UIViewController {
 	
 	private func fetchNextData() {
 		topPostListFooter.swithToLoadingState(isLoading: true)
-		postListManager.getNextPage(pageSize: pageSize) { [weak self] (newPosts, error) in
+		postListManager.getNextPage(pageSize: TopPostsListViewController.pageSize) { [weak self] (newPosts, error, maxPostsReached) in
 			guard let s = self else { return }
 			if error != nil {
 				self?.showAlert(message: error?.errorDescription)
@@ -76,10 +80,16 @@ class TopPostsListViewController: UIViewController {
 			}
 			let newPostsIndexPaths =
 				s.postListManager.indexFor(postIds: newPosts).compactMap { IndexPath(row: $0, section: 0) }
-			if !newPostsIndexPaths.isEmpty {
-				DispatchQueue.main.async {
+			
+			DispatchQueue.main.async {
+				if !newPostsIndexPaths.isEmpty {
 					self?.tableView.insertRows(at: newPostsIndexPaths, with: .automatic)
-					self?.topPostListFooter.swithToLoadingState(isLoading: false)
+				}
+				self?.topPostListFooter.swithToLoadingState(isLoading: false)
+				if maxPostsReached {
+					self?.showAlert(
+						message: "\(NSLocalizedString("MaxPostsReached: ", comment: "")) \(TopPostsListViewController.maxPosts)"
+					)
 				}
 			}
 		}
