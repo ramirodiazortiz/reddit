@@ -21,6 +21,9 @@ protocol RequestExecutable {
    */
 	func execute<T: Decodable>(url: URL, decodingStrategy: JSONDecoder.KeyDecodingStrategy?, with expectedType: T.Type, completionHandler: ((ApiCallResult<T, ApiCallError>) -> Void)?) -> Void
 
-	///Method to cancel current request
-    func cancel()
+	/**
+	Method to cancel a request
+	- parameter url: url of the request to cancel
+	*/
+    func cancel(url: URL)
 }

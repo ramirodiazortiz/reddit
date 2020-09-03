@@ -13,9 +13,8 @@ class RequestExecutor: RequestExecutable {
 	
 	typealias CompletionBlock<T> = (ApiCallResult<T, ApiCallError>) -> Void
 	
-	private let configuration: URLSessionConfiguration
 	private let responseHandler: ResponseParseable
-	private var session: URLSession?
+	private let session: URLSession
 	private weak var task: URLSessionTask?
 
 	/**
@@ -24,7 +23,7 @@ class RequestExecutor: RequestExecutable {
 	- parameter responseHandler: handler conforming **ResponseParseable** used to parse the response.
 	*/
     init(configuration: URLSessionConfiguration = .default, responseHandler: ResponseParseable) {
-        self.configuration = configuration
+        self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
 		self.responseHandler = responseHandler
     }
 
@@ -36,11 +35,10 @@ class RequestExecutor: RequestExecutable {
 	used to decode the model. Default is **.useDefaultKeys**
 	- parameter completionHandler: the completion handler dispatched when the request finishes.
 	 This handler includes an api result object, that can either be .success (including the parsed object) or failure (including ApiCallError data)
+	Note: the same executor can't execute multiple tasks at the same time.
 	*/
-
 	func execute<T>(url: URL, decodingStrategy: JSONDecoder.KeyDecodingStrategy?, with expectedType: T.Type, completionHandler: CompletionBlock<T>?) where T : Decodable {
-		self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
-		self.task = self.session?.dataTask(with: url) { [weak self] data, response, error in
+		self.task = self.session.dataTask(with: url) { [weak self] data, response, error in
 			do {
 				guard let s = self else { return }
 				let parsedResponse =
@@ -62,12 +60,13 @@ class RequestExecutor: RequestExecutable {
         task?.resume()
 	}
 
-	/// Method used to cancel the current request (if any).
-    func cancel() {
+	/**
+	Method to cancel a request
+	- parameter url: url of the request to cancel
+	*/
+	func cancel(url: URL) {
         task?.cancel()
         task = nil
-        session?.invalidateAndCancel()
-        session = nil
     }
 
 }

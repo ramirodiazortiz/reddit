@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8BCCC5C725001003001B9847 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8BE7965A24FDE0C700A1F61A /* Localizable.strings */; };
+		8BCCC5C925001762001B9847 /* DownloadImageExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCCC5C825001762001B9847 /* DownloadImageExecutor.swift */; };
 		8BE795DE24FD71DC00A1F61A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE795DD24FD71DC00A1F61A /* AppDelegate.swift */; };
 		8BE795E924FD71DF00A1F61A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BE795E824FD71DF00A1F61A /* Assets.xcassets */; };
 		8BE795EC24FD71DF00A1F61A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE795EA24FD71DF00A1F61A /* LaunchScreen.storyboard */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		8BCCC5C225000EEC001B9847 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BCCC5C325000EEC001B9847 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8BCCC5C825001762001B9847 /* DownloadImageExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImageExecutor.swift; sourceTree = "<group>"; };
 		8BE795DA24FD71DC00A1F61A /* Reddit Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reddit Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE795DD24FD71DC00A1F61A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BE795E824FD71DF00A1F61A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			children = (
 				8BE7964924FDDFDD00A1F61A /* ApiCallResult.swift */,
 				8BE7964A24FDDFDD00A1F61A /* RequestExecutor.swift */,
+				8BCCC5C825001762001B9847 /* DownloadImageExecutor.swift */,
 				8BE7964B24FDDFDD00A1F61A /* ResponseParser.swift */,
 				8BE7964C24FDDFDD00A1F61A /* Endpoint.swift */,
 			);
@@ -386,6 +389,7 @@
 				8BE7965824FDDFDD00A1F61A /* ResponseParseable.swift in Sources */,
 				8BE7965524FDDFDD00A1F61A /* ResponseParser.swift in Sources */,
 				8BE7966E24FE01E100A1F61A /* SceneDelegate.swift in Sources */,
+				8BCCC5C925001762001B9847 /* DownloadImageExecutor.swift in Sources */,
 				8BE7965424FDDFDD00A1F61A /* RequestExecutor.swift in Sources */,
 				8BE7967524FE0FCE00A1F61A /* Post.swift in Sources */,
 				8BE7968024FEAEF500A1F61A /* PostStatusStorage.swift in Sources */,

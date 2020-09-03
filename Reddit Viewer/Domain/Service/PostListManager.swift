@@ -147,17 +147,21 @@ class PostListManager: NSObject {
 				isRefreshing = false
 			}
 		}
+		
 	}
 
 	subscript(index: Int) -> Post? {
         return topPosts[index]
     }
 
+	///Returns the index of the post in topPosts array
+	func indexFor(postId: String) -> Int? {
+		return topPosts.firstIndex { postId == $0.id }
+	}
+
 	///Returns the index list of the posts in topPosts array (sorted ASC)
 	func indexFor(postIds: [String]) -> [Int] {
-		return postIds.compactMap { postId in
-			topPosts.firstIndex { postId == $0.id }
-		}.sorted()
+		return postIds.compactMap { indexFor(postId: $0) }.sorted()
 	}
 
 }
