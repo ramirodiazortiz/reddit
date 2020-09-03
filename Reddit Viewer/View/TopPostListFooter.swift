@@ -26,4 +26,8 @@ class TopPostListFooter: UIView {
 	func hideDismissButton(hide: Bool) {
 		dismissAllButton?.isHidden = hide
 	}
+	
+	func hideLoader(hide: Bool) {
+		activityIndicator?.isHidden = hide
+	}
 }

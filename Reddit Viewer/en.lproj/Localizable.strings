@@ -31,3 +31,9 @@
 "SecondsAgo" = "Secods(s) ago";
 
 
+/* Error Popup: ok action */
+"Ok" = "Ok";
+/* Error Popup: retry action */
+"Retry" = "Retry";
+/* Error Popup: title */
+"Error" = "Error";

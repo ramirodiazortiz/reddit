@@ -55,11 +55,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8BCCC5C225000EEC001B9847 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8BCCC5C325000EEC001B9847 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BCCC5C825001762001B9847 /* DownloadImageExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImageExecutor.swift; sourceTree = "<group>"; };
 		8BCCC5CF250031C9001B9847 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		8BCCC5D6250098E4001B9847 /* TopPostListFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPostListFooter.swift; sourceTree = "<group>"; };
+		8BCCC5D82500C826001B9847 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8BCCC5D92500C826001B9847 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BE795DA24FD71DC00A1F61A /* Reddit Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reddit Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE795DD24FD71DC00A1F61A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BE795E824FD71DF00A1F61A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -349,6 +349,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 8BE795D124FD71DC00A1F61A;
 			productRefGroup = 8BE795DB24FD71DC00A1F61A /* Products */;
@@ -455,7 +456,7 @@
 		8BE795EA24FD71DF00A1F61A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8BCCC5C225000EEC001B9847 /* en */,
+				8BCCC5D92500C826001B9847 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -471,7 +472,7 @@
 		8BE7966524FE011000A1F61A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8BCCC5C325000EEC001B9847 /* en */,
+				8BCCC5D82500C826001B9847 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

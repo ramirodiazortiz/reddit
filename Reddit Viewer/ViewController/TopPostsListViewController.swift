@@ -53,8 +53,12 @@ class TopPostsListViewController: UIViewController {
 		tableView.deleteRows(at: current, with: .right)
 		postListManager.getPosts(pageSize: pageSize) { [weak self] (error)  in
 			DispatchQueue.main.async {
-				//TODO: Error handling
-				self?.topPostListFooter.hideDismissButton(hide: false)
+				if error != nil {
+					self?.showAlert(message: error?.errorDescription)
+					self?.topPostListFooter?.hideLoader(hide: true)
+					completionBlock?()
+					return
+				}
 				self?.tableView.reloadSections(IndexSet(integer: 0), with: .top)
 				completionBlock?()
 			}
@@ -65,6 +69,11 @@ class TopPostsListViewController: UIViewController {
 		topPostListFooter.swithToLoadingState(isLoading: true)
 		postListManager.getNextPage(pageSize: pageSize) { [weak self] (newPosts, error) in
 			guard let s = self else { return }
+			if error != nil {
+				self?.showAlert(message: error?.errorDescription)
+				self?.topPostListFooter.swithToLoadingState(isLoading: false)
+				return
+			}
 			let newPostsIndexPaths =
 				s.postListManager.indexFor(postIds: newPosts).compactMap { IndexPath(row: $0, section: 0) }
 			if !newPostsIndexPaths.isEmpty {
@@ -74,6 +83,14 @@ class TopPostsListViewController: UIViewController {
 				}
 			}
 		}
+	}
+	
+	private func showAlert(message: String?) {
+		let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: message, preferredStyle: UIAlertController.Style.alert)
+		alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default) { [weak alert] (action: UIAlertAction!) in
+			alert?.dismiss(animated: true, completion: nil)
+		})
+		self.present(alert, animated: true, completion: nil)
 	}
 	
 	private func dismissPost(postId: String) {
@@ -94,8 +111,8 @@ class TopPostsListViewController: UIViewController {
 	}
 	
 	@objc private func refresh(_ sender: UIRefreshControl) {
-		self.reloadData {
-			sender.endRefreshing()
+		self.reloadData { [weak sender] in
+			sender?.endRefreshing()
 		}
 	}
 
