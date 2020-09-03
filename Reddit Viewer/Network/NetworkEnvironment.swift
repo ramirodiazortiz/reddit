@@ -16,6 +16,14 @@ class NetworkEnvironment {
 		configuration.waitsForConnectivity = true
 		return RequestExecutor(configuration: configuration, responseHandler: ResponseParser())
 	}
+	
+	static var getImageExecutor: RequestExecutable {
+		let configuration = URLSessionConfiguration.default
+		configuration.timeoutIntervalForRequest = 20
+		configuration.waitsForConnectivity = true
+		return DownloadExecutor(configuration: configuration)
+	}
+	
 
 }
 
