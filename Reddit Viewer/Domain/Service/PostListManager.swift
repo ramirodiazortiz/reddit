@@ -11,11 +11,11 @@ import UIKit
 ///Manages the current list of the posts
 class PostListManager: NSObject {
 
-	typealias CompletionBlock = (ApiCallError?) -> Void
+	typealias CompletionBlock = (ApiCallError?, Bool) -> Void
 	typealias NewPageCompletionBlock = ([String], ApiCallError?, Bool) -> Void
 	
 	private(set) var topPosts = [Post]()
-	private let statusStorage = PostStatusStorage()
+	private let statusStorage = PostStatusStorage(cache: LocalStorage())
 	private let executor: RequestExecutable
 	private let maxPosts: Int
 	
@@ -38,6 +38,7 @@ class PostListManager: NSObject {
 	func getPosts(pageSize: Int, afterId: String? = nil, completion: @escaping CompletionBlock) {
 		let realPageSize = min(pageSize, maxPosts - topPosts.count)
 		if realPageSize == 0 {
+			completion(nil, true)
 			return
 		}
 		isRefreshing = true
@@ -45,9 +46,15 @@ class PostListManager: NSObject {
 		executor.execute(url: endpoint.buildURL()!, decodingStrategy: endpoint.keyDecodingStrategy, with: PostList.self) { [weak self] (result) in
 			switch result {
 				case .success(let list):
-					self?.checkLimit(list.data, limit: realPageSize, completion: completion)
+					if list.data.isEmpty {
+						completion(nil, true)
+						return
+					} else {
+						self?.checkLimit(list.data, limit: realPageSize, completion: completion)
+					}
+					
 				case .failure(let error):
-					completion(error)
+					completion(error, false)
 			}
 		}
 	}
@@ -64,12 +71,12 @@ class PostListManager: NSObject {
 			return
 		}
 		let oldPostIds = self.postsIds
-		getPosts(pageSize: realPageSize, afterId: topPosts.last?.id) { [weak self] (error) in
+		getPosts(pageSize: realPageSize, afterId: topPosts.last?.id) { [weak self] (error, finished) in
 			guard let s = self else {
 				completion([], error, false)
 				return
 			}
-			completion(Array(s.postsIds.subtracting(oldPostIds)), error, false)
+			completion(Array(s.postsIds.subtracting(oldPostIds)), error, finished)
 		}
 	}
 	
@@ -143,23 +150,34 @@ class PostListManager: NSObject {
 	*/
 	private func checkLimit(_ page: [Post], limit: Int, completion: @escaping CompletionBlock) {
 		if page.isEmpty {
-			completion(nil)
+			completion(nil, true)
 			isRefreshing = false
 		}
+		let fullPageLoaded = fullPageAlreadyLoaded(page)
 		let filteredPage = filterNotDismissedPosts(page)
-		topPosts.append(contentsOf: filteredPage)
+		self.addPage(filteredPage)
 		if filteredPage.count >= limit {
-			completion(nil)
+			completion(nil, false)
 			isRefreshing = false
 		} else {
 			let newLimit = limit - filteredPage.count
-			if let lastId = page.last?.id {
+			if let lastId = page.last?.id, !fullPageLoaded {
 				getPosts(pageSize: newLimit, afterId: lastId,  completion: completion)
 			} else {
-				completion(nil)
+				completion(nil, false)
 				isRefreshing = false
 			}
 		}
+		
+	}
+	
+	func addPage(_ page: [Post]) {
+		topPosts.append(contentsOf: page)
+	}
+	
+	private func fullPageAlreadyLoaded(_ page: [Post]) -> Bool {
+		let pageIds = Set(page.compactMap { $0.id })
+		return pageIds.isSubset(of: postsIds)
 		
 	}
 

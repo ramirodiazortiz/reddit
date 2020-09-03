@@ -15,13 +15,14 @@ class PostStatusStorage: NSObject {
 		case dismissedStatus
 	}
 	
-	private let cache = LocalStorage()
+	private let cache: LocalStorage
 	
 	private var dismissPosts: [String]
 	private var readPosts: [String]
 
 	///Start the storage by using a complementary array to avoid accessing the LocalStorage every time
-	override init() {
+	init(cache: LocalStorage) {
+		self.cache = cache
 		readPosts = cache.getArray(key: Key.readStatus.rawValue, defaultValue: Array<String>())
 		dismissPosts = cache.getArray(key: Key.dismissedStatus.rawValue, defaultValue: Array<String>())
 	}

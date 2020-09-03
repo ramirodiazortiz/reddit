@@ -8,6 +8,7 @@
 
 import UIKit
 
+//TODO: Add unit tests
 class ImageManager: NSObject {
 
 	typealias CompletionBlock = (String, UIImage?) -> Void

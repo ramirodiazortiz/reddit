@@ -21,7 +21,6 @@ struct Post: Decodable {
 	enum CodingKeys: String, CodingKey {
 		case author
 		case data
-		case kind
 		case entryDateTimestamp = "created_utc"
 		case name
 		case numberOfComments = "num_comments"
@@ -46,6 +45,16 @@ struct Post: Decodable {
 		} else {
 			picture = nil
 		}
+	}
+	
+	init(id: String, author: String, title: String, entryDate: Date, numberOfComments: Int, thumbnail: String?, picture: String?) {
+		self.id = id
+		self.author = author
+		self.title = title
+		self.entryDate = entryDate
+		self.thumbnailUrl = thumbnail
+		self.picture = picture
+		self.numberOfComments = numberOfComments
 	}
 
 }

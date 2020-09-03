@@ -55,7 +55,7 @@ class TopPostsListViewController: UIViewController {
 		let current = postListManager.indexFor(postIds: currentPostsIds).compactMap { IndexPath(row: $0, section: 0) }
 		postListManager.clearRepository()
 		tableView.deleteRows(at: current, with: .right)
-		postListManager.getPosts(pageSize: TopPostsListViewController.pageSize) { [weak self] (error)  in
+		postListManager.getPosts(pageSize: TopPostsListViewController.pageSize) { [weak self] (error, maxPostsReached)  in
 			DispatchQueue.main.async {
 				guard let s = self else { return }
 				if error != nil {
@@ -66,6 +66,9 @@ class TopPostsListViewController: UIViewController {
 				}
 				s.tableView.reloadSections(IndexSet(integer: 0), with: .top)
 				completionBlock?()
+				if maxPostsReached {
+					AlertHelper.showOkAlert(title: "!", message: "MaxPostsReached", presenter: s)
+				}
 			}
 		}
 	}
