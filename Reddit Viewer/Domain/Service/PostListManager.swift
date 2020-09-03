@@ -110,7 +110,7 @@ class PostListManager: NSObject {
 	}
 
 	///Returs a set containing the id off all the posts
-	private var postsIds: Set<String> {
+	var postsIds: Set<String> {
 		return Set(topPosts.compactMap { $0.id })
 	}
 	/**
@@ -151,7 +151,10 @@ class PostListManager: NSObject {
 	}
 
 	subscript(index: Int) -> Post? {
-        return topPosts[index]
+		if topPosts.count > index {
+			return topPosts[index]
+		}
+		return nil
     }
 
 	///Returns the index of the post in topPosts array
@@ -162,6 +165,11 @@ class PostListManager: NSObject {
 	///Returns the index list of the posts in topPosts array (sorted ASC)
 	func indexFor(postIds: [String]) -> [Int] {
 		return postIds.compactMap { indexFor(postId: $0) }.sorted()
+	}
+	
+	///Removes all the items in the top posts array
+	func clearRepository() {
+		topPosts.removeAll()
 	}
 
 }
