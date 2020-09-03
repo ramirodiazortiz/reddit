@@ -33,7 +33,23 @@
 
 /* Error Popup: ok action */
 "Ok" = "Ok";
-/* Error Popup: retry action */
-"Retry" = "Retry";
+/* Error Popup: cancel action */
+"Cancel" = "Cancel";
 /* Error Popup: title */
 "Error" = "Error";
+/* Error Popup: maximum number of posts reached */
+"MaxPostsReached" = "Max number of posts reached";
+
+/* Permission Requeired Popup: title*/
+"PermissionRequired" = "Permission Required";
+/* Permission Requeired Popup: title*/
+"PermissionRequiredText" = "This application needs permission to write photos in your gallery. Please, grant it via settings.";
+
+/* Save picture asking: title*/
+"Photo" = "Photo";
+/* Save picture asking: message*/
+"PhotoAsking" = "Do you want to save the picture in your gallery?";
+/* Save picture: saved*/
+"PhotoSaved" = "Saved!";
+
+

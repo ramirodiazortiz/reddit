@@ -57,13 +57,14 @@ class TopPostsListViewController: UIViewController {
 		tableView.deleteRows(at: current, with: .right)
 		postListManager.getPosts(pageSize: TopPostsListViewController.pageSize) { [weak self] (error)  in
 			DispatchQueue.main.async {
+				guard let s = self else { return }
 				if error != nil {
-					self?.showAlert(message: error?.errorDescription)
-					self?.topPostListFooter?.hideLoader(hide: true)
+					AlertHelper.showOkAlert(title: "Error!", message: error?.errorDescription ?? "", presenter: s)
+					s.topPostListFooter?.hideLoader(hide: true)
 					completionBlock?()
 					return
 				}
-				self?.tableView.reloadSections(IndexSet(integer: 0), with: .top)
+				s.tableView.reloadSections(IndexSet(integer: 0), with: .top)
 				completionBlock?()
 			}
 		}
@@ -74,8 +75,8 @@ class TopPostsListViewController: UIViewController {
 		postListManager.getNextPage(pageSize: TopPostsListViewController.pageSize) { [weak self] (newPosts, error, maxPostsReached) in
 			guard let s = self else { return }
 			if error != nil {
-				self?.showAlert(message: error?.errorDescription)
-				self?.topPostListFooter.swithToLoadingState(isLoading: false)
+				AlertHelper.showOkAlert(title: "Error!", message: error?.errorDescription ?? "", presenter: s)
+				s.topPostListFooter.swithToLoadingState(isLoading: false)
 				return
 			}
 			let newPostsIndexPaths =
@@ -83,24 +84,14 @@ class TopPostsListViewController: UIViewController {
 			
 			DispatchQueue.main.async {
 				if !newPostsIndexPaths.isEmpty {
-					self?.tableView.insertRows(at: newPostsIndexPaths, with: .automatic)
+					s.tableView.insertRows(at: newPostsIndexPaths, with: .automatic)
 				}
-				self?.topPostListFooter.swithToLoadingState(isLoading: false)
+				s.topPostListFooter.swithToLoadingState(isLoading: false)
 				if maxPostsReached {
-					self?.showAlert(
-						message: "\(NSLocalizedString("MaxPostsReached: ", comment: "")) \(TopPostsListViewController.maxPosts)"
-					)
+					AlertHelper.showOkAlert(title: "!", message: "MaxPostsReached", presenter: s)
 				}
 			}
 		}
-	}
-	
-	private func showAlert(message: String?) {
-		let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: message, preferredStyle: UIAlertController.Style.alert)
-		alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default) { [weak alert] (action: UIAlertAction!) in
-			alert?.dismiss(animated: true, completion: nil)
-		})
-		self.present(alert, animated: true, completion: nil)
 	}
 	
 	private func dismissPost(postId: String) {
