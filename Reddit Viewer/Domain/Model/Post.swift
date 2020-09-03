@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Post: NSObject, Decodable {
+struct Post: Decodable {
 
 	let author: String
 	let entryDate: Date
@@ -28,7 +28,7 @@ class Post: NSObject, Decodable {
 		case title
 	}
 	
-	required init(from decoder: Decoder) throws {
+	init(from decoder: Decoder) throws {
 		var container = try decoder.container(keyedBy: CodingKeys.self)
 		let kind = try container.decode(String.self, forKey: .kind)
 		container = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
@@ -40,6 +40,14 @@ class Post: NSObject, Decodable {
 		numberOfComments = try container.decode(Int.self, forKey: .numberOfComments)
 		thumbnailUrl = try container.decodeIfPresent(String.self, forKey: .thumbnailUrl)
 		title = try container.decode(String.self, forKey: .title)
+	}
+
+}
+
+extension Post: Equatable {
+
+	static func == (lhs: Post, rhs: Post) -> Bool {
+		return lhs.id == rhs.id
 	}
 
 }

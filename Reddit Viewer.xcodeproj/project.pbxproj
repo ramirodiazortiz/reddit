@@ -29,8 +29,10 @@
 		8BE7967524FE0FCE00A1F61A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967124FE0FCD00A1F61A /* Post.swift */; };
 		8BE7967624FE0FCE00A1F61A /* CollectionEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967324FE0FCE00A1F61A /* CollectionEndpoints.swift */; };
 		8BE7967924FE17B100A1F61A /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967824FE17B100A1F61A /* Dictionary+Extension.swift */; };
+		8BE7967C24FE8E1800A1F61A /* TopPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967B24FE8E1800A1F61A /* TopPostCell.swift */; };
 		8BE7967E24FEAC5000A1F61A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967D24FEAC5000A1F61A /* LocalStorage.swift */; };
 		8BE7968024FEAEF500A1F61A /* PostStatusStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7967F24FEAEF500A1F61A /* PostStatusStorage.swift */; };
+		8BE7968224FEFBCD00A1F61A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7968124FEFBCD00A1F61A /* Date+Extension.swift */; };
 		8BE7968824FF05D000A1F61A /* PostListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7968724FF05D000A1F61A /* PostListManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,8 +80,10 @@
 		8BE7967124FE0FCD00A1F61A /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		8BE7967324FE0FCE00A1F61A /* CollectionEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionEndpoints.swift; sourceTree = "<group>"; };
 		8BE7967824FE17B100A1F61A /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
+		8BE7967B24FE8E1800A1F61A /* TopPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPostCell.swift; sourceTree = "<group>"; };
 		8BE7967D24FEAC5000A1F61A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		8BE7967F24FEAEF500A1F61A /* PostStatusStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatusStorage.swift; sourceTree = "<group>"; };
+		8BE7968124FEFBCD00A1F61A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		8BE7968724FF05D000A1F61A /* PostListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +159,7 @@
 		8BE795DC24FD71DC00A1F61A /* Reddit Viewer */ = {
 			isa = PBXGroup;
 			children = (
+				8BE7967A24FE8E0800A1F61A /* View */,
 				8BE7967724FE179A00A1F61A /* Extension */,
 				8BE7966F24FE0FCD00A1F61A /* Domain */,
 				8BE7966824FE017D00A1F61A /* ViewController */,
@@ -391,6 +396,8 @@
 				8BE7965824FDDFDD00A1F61A /* ResponseParseable.swift in Sources */,
 				8BE7965524FDDFDD00A1F61A /* ResponseParser.swift in Sources */,
 				8BE7966E24FE01E100A1F61A /* SceneDelegate.swift in Sources */,
+				8BE7967C24FE8E1800A1F61A /* TopPostCell.swift in Sources */,
+				8BE7968224FEFBCD00A1F61A /* Date+Extension.swift in Sources */,
 				8BCCC5C925001762001B9847 /* DownloadImageExecutor.swift in Sources */,
 				8BE7965424FDDFDD00A1F61A /* RequestExecutor.swift in Sources */,
 				8BE7967524FE0FCE00A1F61A /* Post.swift in Sources */,
