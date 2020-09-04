@@ -17,6 +17,7 @@ class TopPostsListViewController: UIViewController {
 	
 	private let postListManager = PostListManager(
 		requestExecutor: NetworkEnvironment.getExecutor,
+		statusStorage: PostStatusStorage(cache: LocalStorage()),
 		maxPosts: TopPostsListViewController.maxPosts
 	)
 	private let imageManager = ImageManager(requestExecutor: NetworkEnvironment.getImageExecutor)

@@ -15,7 +15,7 @@ class PostListManager: NSObject {
 	typealias NewPageCompletionBlock = ([String], ApiCallError?, Bool) -> Void
 	
 	private(set) var topPosts = [Post]()
-	private let statusStorage = PostStatusStorage(cache: LocalStorage())
+	private let statusStorage: PostStatusStorage
 	private let executor: RequestExecutable
 	private let maxPosts: Int
 	
@@ -23,11 +23,13 @@ class PostListManager: NSObject {
 	/**
 	Initialize the manager.
 	- parameter requestExecutor: concrete object implementing RequestExecutable interface
+	- parameter statusStorage: store keep track of the status
 	- parameter maxItems: maximum number of posts
 	*/
-	init(requestExecutor: RequestExecutable, maxPosts: Int) {
+	init(requestExecutor: RequestExecutable, statusStorage: PostStatusStorage, maxPosts: Int) {
 		self.executor = requestExecutor
 		self.maxPosts = maxPosts
+		self.statusStorage = statusStorage
 	}
 	/**
 	Get  posts from the server. This metthod will remove from the answer those posts marked as dismissed.  It will also attempt to fulfil the pageSize limit by calling itself recursively. If the number of elements returned by the endpoint is 0, it will break the execution. If the Api call faills, the error will be reported in the completion block. We don't look fetch new posts if maxPosts was reached

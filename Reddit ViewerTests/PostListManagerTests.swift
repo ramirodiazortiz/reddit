@@ -15,7 +15,8 @@ class PostListManagerTests: XCTestCase {
 	
 	override func setUp() {
 		let executor = MockRequestExecutor(bundle: Bundle(for: PostListManagerTests.self), responseHandler: ResponseParser())
-        self.manager = PostListManager(requestExecutor: executor, maxPosts: 10)
+		let statusStorage = PostStatusStorage(cache: LocalStorage(storage: UserDefaults(suiteName: "PostListManagerTests")!))
+		self.manager = PostListManager(requestExecutor: executor, statusStorage: statusStorage, maxPosts: 10)
     }
 
     func testGet5Posts() {
